@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.custom.i18n.resources" value="com.city.bbs.message.Info" />
+	<!-- default package -->
+	<package name="default" namespace="/" extends="struts-default">
+		<interceptors>
+    		<interceptor name="ipCheckInterceptor" class="com.city.bbs.interceptor.IpCheckInterceptor"></interceptor>
+    		<interceptor-stack name="ipCheckStack">
+    			<interceptor-ref name="ipCheckInterceptor"></interceptor-ref>
+    			<interceptor-ref name="defaultStack"></interceptor-ref>
+    		</interceptor-stack>
+    	</interceptors>
+    	
+    	<default-action-ref name="notFund"/> 
+    	<global-results>
+			<result name="iperror">../iperror.jsp</result>
+			<result name="login" type="redirect">user/login.jsp</result>
+			<result name="error">../error.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception" />
+			<exception-mapping result="error" exception="java.sql.SQLException" />
+			<exception-mapping result="error" exception="com.city.bbs.exception.NotFoundException" />
+		</global-exception-mappings>
+		<action name="notFund" class="defaultAction" method="defaultAction"> 
+		   <result name="success">../error.jsp</result> 
+		</action> 
+        <action name="index" class="indexAction">
+            <result name="success">index.jsp</result>
+            <result name="input">login.jsp</result>
+            <result name="error">error.jsp</result>
+            <interceptor-ref name="ipCheckStack"></interceptor-ref>
+        </action>
+    </package>
+
+    <package name="forum" namespace="/forums" extends="struts-default">
+    	<interceptors>
+    		<interceptor name="ipCheckInterceptor" class="com.city.bbs.interceptor.IpCheckInterceptor"></interceptor>
+    		<interceptor-stack name="ipCheckStack">
+    			<interceptor-ref name="ipCheckInterceptor"></interceptor-ref>
+    			<interceptor-ref name="defaultStack"></interceptor-ref>
+    		</interceptor-stack>
+    	</interceptors>
+
+    	<default-action-ref name="notFund"/> 
+    	<global-results>
+			<result name="iperror">../iperror.jsp</result>
+			<result name="error">../error.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception" />
+			<exception-mapping result="error" exception="java.sql.SQLException" />
+			<exception-mapping result="error" exception="com.city.bbs.exception.NotFoundException" />
+		</global-exception-mappings>
+		<action name="notFund" class="defaultAction" method="defaultAction"> 
+		   <result name="success">../error.jsp</result> 
+		</action> 
+        <action name="getForums" class="forumProcessAction" method="getAllForums">
+            <result name="success">/forums/forumsIndex.jsp</result>
+            <result name="input">login.jsp</result>
+            <interceptor-ref name="ipCheckStack"></interceptor-ref>
+        </action>
+    </package>
+
+    <package name="part" namespace="/parts" extends="struts-default">
+    	<interceptors>
+    		<interceptor name="ipCheckInterceptor" class="com.city.bbs.interceptor.IpCheckInterceptor"></interceptor>
+    		<interceptor-stack name="ipCheckStack">
+    			<interceptor-ref name="ipCheckInterceptor"></interceptor-ref>
+    			<interceptor-ref name="defaultStack"></interceptor-ref>
+    		</interceptor-stack>
+    	</interceptors>
+
+    	<default-action-ref name="notFund"/> 
+    	<global-results>
+			<result name="iperror">../iperror.jsp</result>
+			<result name="error">../error.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception" />
+			<exception-mapping result="error" exception="java.sql.SQLException" />
+			<exception-mapping result="error" exception="com.city.bbs.exception.NotFoundException" />
+		</global-exception-mappings>
+		<action name="notFund" class="defaultAction" method="defaultAction"> 
+		   <result name="success">../error.jsp</result> 
+		</action> 
+        <action name="index" class="partProcessAction" method="getAllParts">
+            <result name="success">/parts/partsIndex.jsp</result>
+            <result name="input">login.jsp</result>
+            <interceptor-ref name="ipCheckStack"></interceptor-ref>
+        </action>
+    </package>
+    
+    <package name="post" namespace="/posts" extends="json-default">
+    	<interceptors>
+    		<interceptor name="ipCheckInterceptor" class="com.city.bbs.interceptor.IpCheckInterceptor"></interceptor>
+    		<interceptor-stack name="ipCheckStack">
+    			<interceptor-ref name="ipCheckInterceptor"></interceptor-ref>
+    			<interceptor-ref name="defaultStack"></interceptor-ref>
+    		</interceptor-stack>
+    	</interceptors>
+
+    	<default-action-ref name="notFund"/> 
+    	<global-results>
+			<result name="iperror">../iperror.jsp</result>
+			<result name="error">../error.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception" />
+			<exception-mapping result="error" exception="java.sql.SQLException" />
+			<exception-mapping result="error" exception="com.city.bbs.exception.NotFoundException" />
+		</global-exception-mappings>
+		<action name="notFund" class="defaultAction" method="defaultAction"> 
+		   <result name="success">../error.jsp</result> 
+		</action> 
+        <action name="index" class="postProcessAction" method="postIndex">
+            <result name="success">/posts/postsIndex.jsp</result>
+            <result name="input">login.jsp</result>
+            <interceptor-ref name="ipCheckStack"></interceptor-ref>
+        </action>
+        <action name="checkPost" class="postProcessAction" method="checkPost">
+            <result name="success">/posts/checkPost.jsp</result>
+            <result name="input">login.jsp</result>
+            <interceptor-ref name="ipCheckStack"></interceptor-ref>
+        </action>
+        <action name="addReply" class="postProcessAction" method="addReply">
+            <result name="success" type="json"></result>
+            <result name="input">login.jsp</result>
+            <interceptor-ref name="ipCheckStack"></interceptor-ref>
+        </action>
+        <action name="addPost" class="postProcessAction" method="addPost">
+            <result name="success">/posts/addPost.jsp</result>
+            <result name="input">login.jsp</result>
+            <interceptor-ref name="ipCheckStack"></interceptor-ref>
+        </action>
+        <action name="doAddPost" class="postProcessAction" method="doAddPost">
+            <result name="success" type="json"></result>
+            <result name="input">login.jsp</result>
+            <interceptor-ref name="ipCheckStack"></interceptor-ref>
+        </action>
+    </package>
+    
+    <package name="login" namespace="/login" extends="json-default">
+    	<interceptors>
+    		<interceptor name="ipCheckInterceptor" class="com.city.bbs.interceptor.IpCheckInterceptor"></interceptor>
+    		<interceptor-stack name="ipCheckStack">
+    			<interceptor-ref name="ipCheckInterceptor"></interceptor-ref>
+    			<interceptor-ref name="defaultStack"></interceptor-ref>
+    		</interceptor-stack>
+    	</interceptors>
+
+    	<default-action-ref name="notFund"/> 
+    	<global-results>
+			<result name="iperror">../iperror.jsp</result>
+			<result name="error">../error.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception" />
+			<exception-mapping result="error" exception="java.sql.SQLException" />
+			<exception-mapping result="error" exception="com.city.bbs.exception.NotFoundException" />
+		</global-exception-mappings>
+		<action name="notFund" class="defaultAction" method="defaultAction"> 
+		   <result name="success">../error.jsp</result> 
+		</action> 
+        <action name="login" class="loginAction" method="login">
+            <result name="success" type="json"></result>
+            <result name="input">login.jsp</result>
+            <interceptor-ref name="ipCheckStack"></interceptor-ref>
+        </action>
+    </package>
+    
+    <package name="logout" namespace="/logout" extends="json-default">
+    	<interceptors>
+    		<interceptor name="ipCheckInterceptor" class="com.city.bbs.interceptor.IpCheckInterceptor"></interceptor>
+    		<interceptor-stack name="ipCheckStack">
+    			<interceptor-ref name="ipCheckInterceptor"></interceptor-ref>
+    			<interceptor-ref name="defaultStack"></interceptor-ref>
+    		</interceptor-stack>
+    	</interceptors>
+
+    	<default-action-ref name="notFund"/> 
+    	<global-results>
+			<result name="iperror">../iperror.jsp</result>
+			<result name="error">../error.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception" />
+			<exception-mapping result="error" exception="java.sql.SQLException" />
+			<exception-mapping result="error" exception="com.city.bbs.exception.NotFoundException" />
+		</global-exception-mappings>
+		<action name="notFund" class="defaultAction" method="defaultAction"> 
+		   <result name="success">../error.jsp</result> 
+		</action> 
+        <action name="logout" class="logoutAction" method="logout">
+            <result name="success" type="json"></result>
+            <result name="input">login.jsp</result>
+            <interceptor-ref name="ipCheckStack"></interceptor-ref>
+        </action>
+    </package>
+    
+    <package name="user" namespace="/users" extends="json-default">
+    	<interceptors>
+    		<interceptor name="ipCheckInterceptor" class="com.city.bbs.interceptor.IpCheckInterceptor"></interceptor>
+    		<interceptor-stack name="ipCheckStack">
+    			<interceptor-ref name="ipCheckInterceptor"></interceptor-ref>
+    			<interceptor-ref name="defaultStack"></interceptor-ref>
+    		</interceptor-stack>
+    	</interceptors>
+
+    	<default-action-ref name="notFund"/> 
+    	<global-results>
+			<result name="iperror">../iperror.jsp</result>
+			<result name="error">../error.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception" />
+			<exception-mapping result="error" exception="java.sql.SQLException" />
+			<exception-mapping result="error" exception="com.city.bbs.exception.NotFoundException" />
+		</global-exception-mappings>
+		<action name="notFund" class="defaultAction" method="defaultAction"> 
+		   <result name="success">../error.jsp</result> 
+		</action> 
+        <action name="register" class="userProcessAction" method="register">
+            <result name="success" type="json"></result>
+            <result name="input">login.jsp</result>
+            <interceptor-ref name="ipCheckStack"></interceptor-ref>
+        </action>
+        <action name="showphoto" class="photoProcessAction">
+			<result name="success" type="stream">inputStream</result>
+		</action>
+		<action name="userInfo" class="userProcessAction" method="userInfo">
+			<result name="success">../users/userInfo.jsp</result>
+		</action>
+		<action name="changePhoto" class="userProcessAction" method="changePhoto">
+			<result name="success" type="chain">userInfo</result>
+		</action>
+    </package>
+    
+    <package name="admin" namespace="/admin" extends="json-default">
+    	<interceptors>
+    		<interceptor name="ipCheckInterceptor" class="com.city.bbs.interceptor.IpCheckInterceptor"></interceptor>
+    		<interceptor name="adminCheckInterceptor" class="com.city.bbs.interceptor.AdminCheckInterceptor"></interceptor>
+    		<interceptor-stack name="bbsStack">
+				<interceptor-ref name="ipCheckInterceptor" />
+				<interceptor-ref name="adminCheckInterceptor" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+			<interceptor-stack name="ipCheckStack">
+				<interceptor-ref name="ipCheckInterceptor" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+    	</interceptors>
+    	
+    	<default-action-ref name="notFund"/> 
+    	<global-results>
+			<result name="iperror">../iperror.jsp</result>
+			<result name="login">/admin/login.jsp</result>
+			<result name="error">../error.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception" />
+			<exception-mapping result="error" exception="java.sql.SQLException" />
+			<exception-mapping result="error" exception="com.city.bbs.exception.NotFoundException" />
+		</global-exception-mappings>
+		
+		<action name="notFund" class="defaultAction" method="defaultAction"> 
+		   <result name="success">../error.jsp</result> 
+		</action> 
+        <action name="tologin" class="adminProcessAction" method="toLogin">
+            <result name="success">/admin/login.jsp</result>
+            <result name="input">login.jsp</result>
+            <interceptor-ref name="bbsStack"></interceptor-ref>
+        </action>
+        <action name="login" class="adminProcessAction" method="login">
+            <result name="success" type="json"></result>
+            <result name="input">/admin/login.jsp</result>
+            <interceptor-ref name="ipCheckStack"></interceptor-ref>
+        </action>
+        <action name="index" class="adminProcessAction" method="index">
+            <result name="success">/admin/index.jsp</result>
+            <result name="input">/admin/login.jsp</result>
+            <interceptor-ref name="bbsStack"></interceptor-ref>
+        </action>
+        <action name="logout" class="adminProcessAction" method="logout">
+            <result name="success" type="json"></result>
+            <result name="input">/admin/login.jsp</result>
+            <interceptor-ref name="bbsStack"></interceptor-ref>
+        </action>
+        <action name="usersIndex" class="adminProcessAction" method="userIndex">
+            <result name="success">/admin/usersIndex.jsp</result>
+            <result name="input">/admin/login.jsp</result>
+            <interceptor-ref name="bbsStack"></interceptor-ref>
+        </action>
+        <action name="userDelete" class="userManageAction" method="userDelete">
+            <result name="success" type="json"></result>
+            <result name="input">/admin/login.jsp</result>
+            <interceptor-ref name="bbsStack"></interceptor-ref>
+        </action>
+        <action name="userUpdate" class="userManageAction" method="userUpdate">
+            <result name="success" type="json"></result>
+            <result name="input">/admin/login.jsp</result>
+            <interceptor-ref name="bbsStack"></interceptor-ref>
+        </action>
+        <action name="forumsIndex" class="adminProcessAction" method="forumsIndex">
+            <result name="success">/admin/forumsIndex.jsp</result>
+            <result name="input">/admin/login.jsp</result>
+            <interceptor-ref name="bbsStack"></interceptor-ref>
+        </action>
+        <action name="partsIndex" class="adminProcessAction" method="partsIndex">
+            <result name="success">/admin/partsIndex.jsp</result>
+            <result name="input">/admin/login.jsp</result>
+            <interceptor-ref name="bbsStack"></interceptor-ref>
+        </action>
+        <action name="postsIndex" class="adminProcessAction" method="postsIndex">
+            <result name="success">/admin/postsIndex.jsp</result>
+            <result name="input">/admin/login.jsp</result>
+            <interceptor-ref name="bbsStack"></interceptor-ref>
+        </action>
+        <action name="forumDelete" class="forumManageAction" method="forumDelete">
+            <result name="success" type="json"></result>
+            <result name="input">/admin/login.jsp</result>
+            <interceptor-ref name="bbsStack"></interceptor-ref>
+        </action>
+        <action name="forumUpdate" class="forumManageAction" method="forumUpdate">
+            <result name="success" type="json"></result>
+            <result name="input">/admin/login.jsp</result>
+            <interceptor-ref name="bbsStack"></interceptor-ref>
+        </action>
+        <action name="forumAdd" class="forumManageAction" method="forumAdd">
+            <result name="success" type="json"></result>
+            <result name="input">/admin/login.jsp</result>
+            <interceptor-ref name="bbsStack"></interceptor-ref>
+        </action>
+        <action name="partAdd" class="partManageAction" method="partAdd">
+            <result name="success" type="json"></result>
+            <result name="input">/admin/login.jsp</result>
+            <interceptor-ref name="bbsStack"></interceptor-ref>
+        </action>
+        <action name="partDelete" class="partManageAction" method="partDelete">
+            <result name="success" type="json"></result>
+            <result name="input">/admin/login.jsp</result>
+            <interceptor-ref name="bbsStack"></interceptor-ref>
+        </action>
+        <action name="partUpdate" class="partManageAction" method="partUpdate">
+            <result name="success" type="json"></result>
+            <result name="input">/admin/login.jsp</result>
+            <interceptor-ref name="bbsStack"></interceptor-ref>
+        </action>
+        <action name="postDelete" class="postManageAction" method="postDelete">
+            <result name="success" type="json"></result>
+            <result name="input">/admin/login.jsp</result>
+            <interceptor-ref name="bbsStack"></interceptor-ref>
+        </action>
+    </package>
+</struts>

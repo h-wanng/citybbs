@@ -1,0 +1,85 @@
+* {
+	font-family: "Microsoft YaHei" ! important;
+}
+
+body {
+	/*background-color: #EEEEEE;*/
+	background:url(../img/login_bgx.gif);
+}
+.footer{
+	height:70px;
+	position: fixed;
+	left: 0px;
+	bottom: 0px;
+	background:#717678;
+	opacity: 0.8;
+	width:100%;
+}
+.footer #ftext1{
+	font-family: "微软雅黑";
+	font-size: 18px;
+	line-height: 17px;
+	width: 650px;
+	display: block;
+	margin: 0 auto;
+	padding-top: 15px;
+}
+.footer #ftext2{
+	font-family: "微软雅黑";
+	font-size: 18px;
+	line-height: 17px;
+	width: 260px;
+	display: block;
+	margin: 0 auto;
+	padding-top: 10px;
+}
+.navbar-right {
+	margin-right: 5px;
+}
+
+.navbar-header a {
+	font-size: 30px;
+}
+
+.modal-dialog {
+	padding-top: 120px;
+	width: 350px;
+}
+
+.modal-content {
+	width: 350px;
+}
+.forums{
+	padding-top: 10px;
+	background-color: rgba(255,255,255,0.8);
+	border: 1px solid #dedede;
+	border-radius: 8px;
+	margin-left: 9%;
+	margin-top: 70px;
+	padding: 30px;
+	max-width: 37%;
+	font-family: "微软雅黑";
+}
+.enterforums{
+	max-width: 37%;
+	margin-left: 35%;
+	/*margin-right: 32%;*/
+}
+#log-reg {
+	width:55px;
+	float: right;
+	margin-left: 5px;
+}
+#logsub{
+	width:55px;
+	float: right;
+}
+#reg-log {
+	width: 75px;
+	float: right;
+	margin-left: 5px;
+}
+#regsub {
+	width:55px;
+	float: right;
+}
